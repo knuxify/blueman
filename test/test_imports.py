@@ -20,7 +20,8 @@ def load_tests(*_args):
     test_cases = TestSuite()
     home = os.path.dirname(os.path.dirname(__file__))
     for package in pkgutil.walk_packages([f"{home}/blueman"], "blueman."):
-        test_cases.addTest(TestImports(package.name))
+        if package.name.startswith('blueman.plugins.'):
+            test_cases.addTest(TestImports(package.name))
 
     assert test_cases.countTestCases() > 0
 
